@@ -18,6 +18,36 @@ footer {
   width: 100%;
 }
 
+h1 {
+  padding: 25px 0px;
+}
+
+
 ul {
   list-style-type: none;
+}
+
+.links-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+.page-link {
+  display: flex;
+  text-align: center;
+  flex-grow: 1;
+  border-left: 1px solid grey;
+  padding: 8px 0px;
+}
+
+.last-page-link {
+  border-right: 1px solid grey;
+}
+
+li {
+  width: 100%;
+  text-align: center;
 }
