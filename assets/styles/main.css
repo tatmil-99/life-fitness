@@ -42,6 +42,11 @@ ul {
   border-left: none;
 }
 
+/* apply class using js */
+.active-page {
+  background-color: rgb(62, 61, 61);
+}
+
 a {
   text-decoration: none;
 }
