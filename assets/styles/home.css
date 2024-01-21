@@ -1,0 +1,9 @@
+.images-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+/* img {
+  display: block;
+} */
