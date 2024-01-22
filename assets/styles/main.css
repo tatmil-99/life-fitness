@@ -2,6 +2,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  /* font-weight: 550; */
+}
+
+p {
+  line-height: 1.8;
+  /* font-weight: 525; */
 }
 
 body {
@@ -13,10 +21,12 @@ body {
 
 header {
   flex: 0 0 0;
+  margin-bottom: 70px;
 }
 
 main {
   flex: 1;
+  margin-bottom: 70px;
 }
 
 footer {
@@ -25,6 +35,7 @@ footer {
   align-items: center;
   background-color: black;
   justify-content: center;
+  margin-top: 130px;
 
   p {
     color: white;
@@ -32,7 +43,8 @@ footer {
 }
 
 h1 {
-  padding: 25px 0px;
+  padding: 25px 10px;
+  font-size: 1.7em;
 }
 
 
