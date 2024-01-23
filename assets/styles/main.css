@@ -89,3 +89,23 @@ a:visited {
 a:hover {
   font-weight: bold;
 }
+
+.footer-contents {
+  display: flex;
+  flex-direction: column;
+  width: 750px;
+
+  p {
+    text-align: right;
+    margin: 20px 0 15px 0;
+    font-size: .8em;
+  }
+
+  ul {
+    margin-bottom: 15px;
+  }
+
+  address {
+    margin: 15px 0;
+  }
+}
