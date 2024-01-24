@@ -1,0 +1,14 @@
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-container {
+  width: 500px;
+  margin: 0 10px;
+}
+
+details {
+  border: 1px solid black;
+}
