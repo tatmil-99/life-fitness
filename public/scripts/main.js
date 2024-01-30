@@ -1,7 +1,7 @@
 const getActivePage = () => {
   if (window.location) {
     const path = window.location.pathname;
-    const page = path.slice(1, -5);
+    const page = path.slice(8, -5);
 
     return page;
   }
@@ -17,7 +17,7 @@ const createNav = (page) => {
 
   if (page === "home") li.classList.add("nav-link", "first-link", page);
   li.classList.add("nav-link", page);
-  a.href = `../${page}.html`;
+  a.href = `${page}.html`;
   a.textContent = `${capitalizedLink}`;
 
   li.appendChild(a);
