@@ -5,14 +5,16 @@ const port = 8080;
 
 const server = http.createServer((req, res) => {
   const parsedUrl = new URL(req.url, "http://localhost:8080");
+  const urlPath = "." + parsedUrl.pathname;
 
-  fs.readFile("." + parsedUrl.pathname, (err, data) => {
+  fs.readFile(urlPath, (err, data) => {
     try {
       res.statusCode = 200;
 
-      if (parsedUrl.pathname.includes(".css")) {
+      // set header content based on media type
+      if (urlPath.includes(".css")) {
         res.setHeader("Content-Type", "text/css");
-      } else if (parsedUrl.pathname.includes(".js")) {
+      } else if (urlPath.includes(".js")) {
         res.setHeader("Content-Type", "text/javascript");
       } else {
         res.setHeader("Content-Type", "text/html");
