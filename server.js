@@ -7,19 +7,26 @@ const server = http.createServer((req, res) => {
   const parsedUrl = new URL(req.url, "http://localhost:8080");
 
   fs.readFile("." + parsedUrl.pathname, (err, data) => {
-    if (err) {
-      res.writeHead(404, { "Content-Type": "text/html" });
-      return res.end("404 not found");
-    } else if (parsedUrl.pathname.includes(".css")) {
-      res.writeHead(200, { "Content-Type": "text/css" });
-    } else if (parsedUrl.pathname.includes(".js")) {
-      res.writeHead(200, { "Content-Type": "application/javascript" });
-    } else {
-      res.writeHead(200, { "Content-Type": "text/html" });
-    }
+    try {
+      res.statusCode = 200;
 
-    res.write(data);
-    return res.end();
+      if (parsedUrl.pathname.includes(".css")) {
+        res.setHeader("Content-Type", "text/css");
+      } else if (parsedUrl.pathname.includes(".js")) {
+        res.setHeader("Content-Type", "text/javascript");
+      } else {
+        res.setHeader("Content-Type", "text/html");
+      }
+
+      res.write(data);
+
+      return res.end();
+    } catch (err) {
+      res.statusCode = 404;
+      res.setHeader("Content-Type", "text/html");
+
+      return res.end("404 not found");
+    }
   });
 });
 
