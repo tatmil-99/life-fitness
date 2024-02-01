@@ -1,7 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
   const parsedUrl = new URL(req.url, "http://localhost:8080");
@@ -32,4 +32,4 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(port);
+server.listen(port, () => console.log("server running..."));
