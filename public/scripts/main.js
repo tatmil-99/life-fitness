@@ -1,7 +1,14 @@
 const getActivePage = () => {
   if (window.location) {
     const path = window.location.pathname;
-    const page = path.slice(8, -5);
+
+    let page;
+
+    if (path == "/") {
+      page = "home";
+    } else {
+      page = path.slice(path.indexOf("/") + 1, path.indexOf("."));
+    }
 
     return page;
   }
