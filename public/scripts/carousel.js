@@ -3,7 +3,8 @@ const handleStart = (e) => {
   const startX = e.changedTouches[0].clientX;
 
   const img = e.target;
-  img.addEventListener("touchend", (e) => {
+
+  const handleEnd = (e) => {
     e.preventDefault();
     const endX = e.changedTouches[0].clientX;
 
@@ -12,7 +13,12 @@ const handleStart = (e) => {
     } else if (endX > startX) {
       console.log("swiped left");
     }
-  });
+
+    // removes event listener to prevent build up of "touchend" events
+    img.removeEventListener("touchend", handleEnd);
+  };
+
+  img.addEventListener("touchend", handleEnd);
 };
 
 const carousel = document.querySelector(".carousel");
