@@ -1,35 +1,35 @@
-const handleStart = (e) => {
-  e.preventDefault();
+const imageFiles = ["../images/_DSC8161.JPG"];
 
+const preLoadImg = (file) => {
+  const img = new Image();
+  img.src = file;
+  img.className = "carousel";
+
+  return img;
+};
+
+const handleStart = (e) => {
   const img = e.target;
   const startX = e.changedTouches[0].clientX;
 
   const handleEnd = (e) => {
-    e.preventDefault();
-
+    const preLoadedImg = preLoadImg(imageFiles[0]);
     const endX = e.changedTouches[0].clientX;
 
     if (endX < startX) {
-      fetch("./images/_DSC8161.JPG")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-          }
-          return response.blob();
-        })
-        .then((myBlob) => {
-          const objectURL = URL.createObjectURL(myBlob);
-          img.src = objectURL;
-        })
-        .catch((err) => console.error(`Fetch problem: ${err.message}`));
+      console.log("swiped right");
+      img.replaceWith(preLoadedImg);
+      preLoadedImg.addEventListener("touchstart", handleStart);
     } else if (endX > startX) {
       console.log("swiped left");
     }
+
     // removes event listener to prevent build up of "touchend" events
     img.removeEventListener("touchend", handleEnd);
   };
+
   img.addEventListener("touchend", handleEnd);
 };
 
-const carousel = document.querySelector(".carousel");
-carousel.addEventListener("touchstart", handleStart);
+const img = document.querySelector(".slideshow-img");
+img.addEventListener("touchstart", handleStart);
