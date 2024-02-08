@@ -8,12 +8,13 @@ const preLoadImg = (file) => {
   return img;
 };
 
+const preLoadedImg = preLoadImg(imageFiles[0]);
+
 const handleStart = (e) => {
   const img = e.target;
   const startX = e.changedTouches[0].clientX;
 
   const handleEnd = (e) => {
-    const preLoadedImg = preLoadImg(imageFiles[0]);
     const endX = e.changedTouches[0].clientX;
 
     if (endX < startX) {
