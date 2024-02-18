@@ -1,14 +1,14 @@
 const handleStart = (e) => {
   const img = e.target;
   const startX = e.changedTouches[0].clientX;
-  
+
   // use x-coordinates to determine swipe direction
   const handleEnd = (e) => {
     const endX = e.changedTouches[0].clientX;
 
     if (endX < startX) {
       img.replaceWith(preLoadedImages.shift());
-      viewedImages.unshift(img)
+      viewedImages.unshift(img);
     } else if (endX > startX) {
       img.replaceWith(viewedImages.shift());
       preLoadedImages.unshift(img);
@@ -20,18 +20,14 @@ const handleStart = (e) => {
   img.addEventListener("touchend", handleEnd);
 };
 
-
 const viewedImages = [];
 
 const img = document.querySelector(".slideshow-img");
 img.addEventListener("touchstart", handleStart);
 
-const imageFiles = [
-  "../images/_DSC8151.JPG",
-  "../images/_DSC8161.JPG",
-];
+const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 
-const preLoadedImages = imageFiles.map(file => {
+const preLoadedImages = imageFiles.map((file) => {
   const img = new Image();
   img.src = file;
   img.className = "carousel";
@@ -41,6 +37,6 @@ const preLoadedImages = imageFiles.map(file => {
   return img;
 });
 
-preLoadedImages.forEach(img => {
-  img.addEventListener("touchstart", handleStart)
+preLoadedImages.forEach((img) => {
+  img.addEventListener("touchstart", handleStart);
 });

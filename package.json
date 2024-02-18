@@ -12,6 +12,10 @@
   "author": "Tatien Miller",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "eslint": "^8.56.0",
     "nodemon": "^3.0.3"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^9.1.0"
   }
 }
