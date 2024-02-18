@@ -1,20 +1,22 @@
 const handleStart = (e) => {
   const img = e.target;
-  const startX = e.changedTouches[0].clientX;
 
-  // use x-coordinates to determine swipe direction
+  // gets x-coordinates to determine swipe direction
+  const startX = e.changedTouches[0].clientX;
   const handleEnd = (e) => {
     const endX = e.changedTouches[0].clientX;
 
-    if (endX < startX) {
+    // uses LIFO to handle swiping back and forth through images
+    if (endX < startX && preLoadedImages.length > 0) {
       img.replaceWith(preLoadedImages.shift());
-      viewedImages.unshift(img);
-    } else if (endX > startX) {
-      img.replaceWith(viewedImages.shift());
+      viewedImages.push(img);
+    } else if (endX > startX && viewedImages.length > 0) {
+      img.replaceWith(viewedImages.pop());
       preLoadedImages.unshift(img);
     }
 
-    img.removeEventListener("touchend", handleEnd); // prevent piling of events
+    // prevents piling of events
+    img.removeEventListener("touchend", handleEnd);
   };
 
   img.addEventListener("touchend", handleEnd);
