@@ -23,7 +23,14 @@ const handleStart = (e) => {
 const viewedImages = [];
 
 const img = document.querySelector(".slideshow-img");
-img.addEventListener("touchstart", handleStart);
+
+if (img.complete) {
+  img.addEventListener("touchstart", handleStart);
+} else {
+  img.addEventListener("load", () => {
+    img.addEventListener("touchstart", handleStart);
+  });
+}
 
 const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 
@@ -38,5 +45,7 @@ const preLoadedImages = imageFiles.map((file) => {
 });
 
 preLoadedImages.forEach((img) => {
-  img.addEventListener("touchstart", handleStart);
+  img.addEventListener("load", () => {
+    img.addEventListener("touchstart", handleStart);
+  });
 });

@@ -42,17 +42,14 @@ const highlightNav = (activePage) => {
 };
 
 // create nav menu and append it to page
-window.addEventListener("load", () => {
-  const nav = document.querySelector("nav");
-  const ul = document.createElement("ul");
-  const pages = ["home", "gym", "tanning", "faqs", "contact"];
+const nav = document.querySelector("nav");
+const ul = document.createElement("ul");
+const pages = ["home", "gym", "tanning", "faqs", "contact"];
 
-  const navMenu = pages.map(createNav);
+const navMenu = pages.map(createNav);
+ul.classList.add("nav-list");
+ul.append(...navMenu);
+nav.appendChild(ul);
 
-  ul.classList.add("nav-list");
-  ul.append(...navMenu);
-  nav.appendChild(ul);
-
-  const activePage = getActivePage();
-  highlightNav(activePage);
-});
+const activePage = getActivePage();
+highlightNav(activePage);
