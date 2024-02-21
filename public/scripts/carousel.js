@@ -1,40 +1,39 @@
 const handleStart = (e) => {
+  const startX = e.clientX;
   const img = e.target;
 
-  // gets x-coordinates to determine swipe direction
-  const startX = e.changedTouches[0].clientX;
   const handleEnd = (e) => {
-    const endX = e.changedTouches[0].clientX;
+    const endX = e.clientX;
+    const scrollSensitivity = 50;
+    const scrollDistance = startX - endX;
 
     // uses LIFO to handle swiping back and forth through images
-    if (endX < startX && preLoadedImages.length > 0) {
+    if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
       img.replaceWith(preLoadedImages.shift());
       viewedImages.push(img);
-    } else if (endX > startX && viewedImages.length > 0) {
+    } else if (scrollDistance < -scrollSensitivity && viewedImages.length > 0) {
       img.replaceWith(viewedImages.pop());
       preLoadedImages.unshift(img);
     }
 
-    // prevents piling of events
-    img.removeEventListener("touchend", handleEnd);
+    // prevents event piling
+    img.removeEventListener("pointerup", handleEnd);
   };
 
-  img.addEventListener("touchend", handleEnd);
+  img.addEventListener("pointerup", handleEnd);
 };
 
 const viewedImages = [];
-
+const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 const img = document.querySelector(".slideshow-img");
 
 if (img.complete) {
-  img.addEventListener("touchstart", handleStart);
+  img.addEventListener("pointerdown", handleStart);
 } else {
   img.addEventListener("load", () => {
-    img.addEventListener("touchstart", handleStart);
+    img.addEventListener("pointerdown", handleStart);
   });
 }
-
-const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 
 const preLoadedImages = imageFiles.map((file) => {
   const img = new Image();
@@ -48,6 +47,6 @@ const preLoadedImages = imageFiles.map((file) => {
 
 preLoadedImages.forEach((img) => {
   img.addEventListener("load", () => {
-    img.addEventListener("touchstart", handleStart);
+    img.addEventListener("pointerdown", handleStart);
   });
 });

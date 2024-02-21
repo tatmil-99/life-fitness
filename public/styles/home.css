@@ -6,6 +6,8 @@
 img {
   max-width: 100%;
   height: auto;
+  /* prevents browser from hijacking scroll gesture */
+  touch-action: none;
 }
 
 .content {
