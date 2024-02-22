@@ -1,6 +1,8 @@
 .slideshow-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 img {
@@ -24,4 +26,19 @@ img {
 
 .first-para {
   margin-bottom: 25px;
+}
+
+.bubble-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.bubble {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: solid grey 1px;
+  margin: 0 5px;
 }

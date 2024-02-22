@@ -23,6 +23,20 @@ const handleStart = (e) => {
   img.addEventListener("pointerup", handleEnd);
 };
 
+const createBubbles = (fileLength) => {
+  const bubbleContainer = document.querySelector(".bubble-container");
+
+  let counter = 0;
+
+  while (counter <= fileLength) {
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubbleContainer.appendChild(bubble);
+
+    counter++;
+  }
+};
+
 const viewedImages = [];
 const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 const img = document.querySelector(".slideshow-img");
@@ -50,3 +64,5 @@ preLoadedImages.forEach((img) => {
     img.addEventListener("pointerdown", handleStart);
   });
 });
+
+createBubbles(imageFiles.length);
