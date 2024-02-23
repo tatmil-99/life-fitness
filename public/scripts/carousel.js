@@ -3,6 +3,17 @@ const handleStart = (e) => {
   const img = e.target;
 
   const handleEnd = (e) => {
+    const bubble = document.querySelectorAll(".bubble");
+    bubble.forEach((bubble) => {
+      const dataAttribute = bubble.dataset.imgNum;
+
+      if (dataAttribute - 1 === currentBubble) {
+        bubble.style.backgroundColor = "black";
+      }
+    });
+
+    currentBubble++;
+
     const endX = e.clientX;
     const scrollSensitivity = 50;
     const scrollDistance = startX - endX;
@@ -31,8 +42,14 @@ const createBubbles = (fileLength) => {
   while (counter <= fileLength) {
     const bubble = document.createElement("div");
     bubble.className = "bubble";
-    bubbleContainer.appendChild(bubble);
+    bubble.dataset.imgNum = counter;
 
+    // fill in default image
+    if (counter === 0) {
+      bubble.style.backgroundColor = "black";
+    }
+
+    bubbleContainer.appendChild(bubble);
     counter++;
   }
 };
@@ -64,5 +81,7 @@ preLoadedImages.forEach((img) => {
     img.addEventListener("pointerdown", handleStart);
   });
 });
+
+let currentBubble = 0;
 
 createBubbles(imageFiles.length);
