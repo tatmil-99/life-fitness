@@ -3,17 +3,6 @@ const handleStart = (e) => {
   const img = e.target;
 
   const handleEnd = (e) => {
-    const bubble = document.querySelectorAll(".bubble");
-    bubble.forEach((bubble) => {
-      const dataAttribute = bubble.dataset.imgNum;
-
-      if (dataAttribute - 1 === currentBubble) {
-        bubble.style.backgroundColor = "black";
-      }
-    });
-
-    currentBubble++;
-
     const endX = e.clientX;
     const scrollSensitivity = 50;
     const scrollDistance = startX - endX;
@@ -22,6 +11,7 @@ const handleStart = (e) => {
     if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
       img.replaceWith(preLoadedImages.shift());
       viewedImages.push(img);
+      fillBubble();
     } else if (scrollDistance < -scrollSensitivity && viewedImages.length > 0) {
       img.replaceWith(viewedImages.pop());
       preLoadedImages.unshift(img);
@@ -39,23 +29,37 @@ const createBubbles = (fileLength) => {
 
   let counter = 0;
 
+  // iterates the length of the image file so a bubble is created for
+  // the default image loaded with the home page
   while (counter <= fileLength) {
     const bubble = document.createElement("div");
     bubble.className = "bubble";
     bubble.dataset.imgNum = counter;
-
-    // fill in default image
-    if (counter === 0) {
-      bubble.style.backgroundColor = "black";
-    }
-
     bubbleContainer.appendChild(bubble);
+
     counter++;
   }
 };
 
+const fillBubble = () => {
+  const bubbleAttributes = document.querySelectorAll("[data-img-num]");
+
+  bubbleAttributes.forEach((bubble) => {
+    const bubbleNumber = Number(bubble.dataset.imgNum);
+
+    if (bubbleNumber === currentBubble) {
+      bubble.style.backgroundColor = "black";
+    } else {
+      bubble.style.backgroundColor = "white";
+    }
+  });
+
+  currentBubble++;
+};
+
 const viewedImages = [];
 const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
+
 const img = document.querySelector(".slideshow-img");
 
 if (img.complete) {
@@ -82,6 +86,8 @@ preLoadedImages.forEach((img) => {
   });
 });
 
+// bubble associated with image in carousel
 let currentBubble = 0;
 
 createBubbles(imageFiles.length);
+fillBubble(); // fills bubble associated with default image in home page
