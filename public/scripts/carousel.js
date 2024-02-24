@@ -1,3 +1,14 @@
+const transition = (img) => {
+  img.style.opacity = 0;
+
+  return () => {
+    img.replaceWith(preLoadedImages.shift());
+    img.style.opacity = 1;
+    viewedImages.push(img);
+    fillBubble();
+  };
+};
+
 const handleStart = (e) => {
   const startX = e.clientX;
   const img = e.target;
@@ -9,9 +20,8 @@ const handleStart = (e) => {
 
     // uses LIFO to handle swiping back and forth through images
     if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
-      img.replaceWith(preLoadedImages.shift());
-      viewedImages.push(img);
-      fillBubble();
+      // img.style.opacity = 0;
+      setTimeout(transition(img), 350);
     } else if (scrollDistance < -scrollSensitivity && viewedImages.length > 0) {
       img.replaceWith(viewedImages.pop());
       preLoadedImages.unshift(img);

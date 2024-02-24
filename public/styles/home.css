@@ -10,6 +10,7 @@ img {
   height: auto;
   /* prevents browser from hijacking scroll gesture */
   touch-action: none;
+  transition: opacity 1s ease-in;
 }
 
 .content {
