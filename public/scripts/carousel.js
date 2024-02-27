@@ -31,14 +31,21 @@ const fillBubble = () => {
   currentBubble++;
 };
 
-const transition = (img) => {
+const transition = (img, direction) => {
   img.style.opacity = 0;
 
   return () => {
-    img.replaceWith(preLoadedImages.shift());
-    img.style.opacity = 1;
-    viewedImages.push(img);
-    fillBubble();
+    if (direction === "right") {
+      img.replaceWith(preLoadedImages.shift());
+      img.style.opacity = 1;
+      viewedImages.push(img);
+      fillBubble();
+    } else {
+      img.replaceWith(viewedImages.pop());
+      img.style.opacity = 1;
+      preLoadedImages.unshift(img);
+      fillBubble();
+    }
   };
 };
 
@@ -53,10 +60,9 @@ const handleStart = (e) => {
 
     // uses LIFO to handle swiping back and forth through images
     if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
-      setTimeout(transition(img), 350);
+      setTimeout(transition(img, "right"), 350);
     } else if (scrollDistance < -scrollSensitivity && viewedImages.length > 0) {
-      img.replaceWith(viewedImages.pop());
-      preLoadedImages.unshift(img);
+      setTimeout(transition(img, "left"), 350);
     }
 
     // prevents event piling
