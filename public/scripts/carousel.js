@@ -3,8 +3,7 @@ const createBubbles = (fileLength) => {
 
   let counter = 0;
 
-  // iterates the length of the image file so a bubble is created for
-  // the default image loaded with the home page
+  // creates bubbles for all images **including** default
   while (counter <= fileLength) {
     const bubble = document.createElement("div");
     bubble.className = "bubble";
@@ -15,15 +14,6 @@ const createBubbles = (fileLength) => {
   }
 };
 
-// assign imgNum data-attr to pre-rendered imgs (will need to hard-code initial img attr)
-// pass current img to fillBubble()
-// get data-attr of img
-// get all bubbles
-// iterate through bubbles
-// get data-attr of bubble
-// if data-attr of bubble === data-attr of img
-// set background of bubble to black
-// otherwise set background to white
 const fillBubble = (img) => {
   const imgData = Number(img.getAttribute("data-img-num"));
 
@@ -41,16 +31,23 @@ const transition = (img, direction) => {
   img.style.opacity = 0;
 
   return () => {
+    let nextImg;
+    let prevImg;
+
     if (direction === "right") {
-      img.replaceWith(preLoadedImages.shift());
-      img.style.opacity = 1;
+      nextImg = preLoadedImages.shift();
+      img.replaceWith(nextImg);
+      nextImg.style.opacity = 1;
+      fillBubble(nextImg);
+
       viewedImages.push(img);
-      fillBubble(img);
     } else {
-      img.replaceWith(viewedImages.pop());
-      img.style.opacity = 1;
+      prevImg = viewedImages.pop();
+      img.replaceWith(prevImg);
+      prevImg.style.opacity = 1;
+      fillBubble(prevImg);
+
       preLoadedImages.unshift(img);
-      fillBubble(img);
     }
   };
 };
@@ -109,4 +106,4 @@ preLoadedImages.forEach((img) => {
 });
 
 createBubbles(imageFiles.length);
-fillBubble(img); // fills bubble associated with default image in home page
+fillBubble(img); // fills bubble for default image
