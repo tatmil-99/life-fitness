@@ -15,20 +15,26 @@ const createBubbles = (fileLength) => {
   }
 };
 
-const fillBubble = () => {
-  const bubbleAttributes = document.querySelectorAll("[data-img-num]");
+// assign imgNum data-attr to pre-rendered imgs (will need to hard-code initial img attr)
+// pass current img to fillBubble()
+// get data-attr of img
+// get all bubbles
+// iterate through bubbles
+// get data-attr of bubble
+// if data-attr of bubble === data-attr of img
+// set background of bubble to black
+// otherwise set background to white
+const fillBubble = (img) => {
+  const imgData = Number(img.getAttribute("data-img-num"));
 
-  bubbleAttributes.forEach((bubble) => {
-    const bubbleNumber = Number(bubble.dataset.imgNum);
+  const bubbles = document.querySelectorAll(".bubble");
+  bubbles.forEach((bubble) => {
+    const bubbleData = Number(bubble.getAttribute("data-img-num"));
 
-    if (bubbleNumber === currentBubble) {
-      bubble.style.backgroundColor = "black";
-    } else {
-      bubble.style.backgroundColor = "white";
-    }
+    bubbleData === imgData
+      ? (bubble.style.backgroundColor = "black")
+      : (bubble.style.backgroundColor = "white");
   });
-
-  currentBubble++;
 };
 
 const transition = (img, direction) => {
@@ -39,12 +45,12 @@ const transition = (img, direction) => {
       img.replaceWith(preLoadedImages.shift());
       img.style.opacity = 1;
       viewedImages.push(img);
-      fillBubble();
+      fillBubble(img);
     } else {
       img.replaceWith(viewedImages.pop());
       img.style.opacity = 1;
       preLoadedImages.unshift(img);
-      fillBubble();
+      fillBubble(img);
     }
   };
 };
@@ -75,7 +81,7 @@ const handleStart = (e) => {
 const viewedImages = [];
 const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 
-const img = document.querySelector(".slideshow-img");
+const img = document.querySelector(".carousel-img");
 
 if (img.complete) {
   img.addEventListener("pointerdown", handleStart);
@@ -85,10 +91,11 @@ if (img.complete) {
   });
 }
 
-const preLoadedImages = imageFiles.map((file) => {
+const preLoadedImages = imageFiles.map((file, index) => {
   const img = new Image();
   img.src = file;
-  img.className = "carousel";
+  img.className = "carousel-img";
+  img.dataset.imgNum = index + 1;
   img.width = "750";
   img.height = "500";
 
@@ -101,8 +108,5 @@ preLoadedImages.forEach((img) => {
   });
 });
 
-// bubble associated with image in carousel
-let currentBubble = 0;
-
 createBubbles(imageFiles.length);
-fillBubble(); // fills bubble associated with default image in home page
+fillBubble(img); // fills bubble associated with default image in home page
