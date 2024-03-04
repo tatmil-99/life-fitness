@@ -80,6 +80,7 @@ const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
 
 const img = document.querySelector(".carousel-img");
 
+// checks to see if image is already cached
 if (img.complete) {
   img.addEventListener("pointerdown", handleStart);
 } else {
@@ -96,13 +97,11 @@ const preLoadedImages = imageFiles.map((file, index) => {
   img.width = "750";
   img.height = "500";
 
-  return img;
-});
-
-preLoadedImages.forEach((img) => {
   img.addEventListener("load", () => {
     img.addEventListener("pointerdown", handleStart);
   });
+
+  return img;
 });
 
 createBubbles(imageFiles.length);
