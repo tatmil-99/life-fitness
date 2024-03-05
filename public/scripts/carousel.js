@@ -76,7 +76,13 @@ const handleStart = (e) => {
 };
 
 const viewedImages = [];
-const imageFiles = ["../images/_DSC8151.JPG", "../images/_DSC8161.JPG"];
+const imageFiles = [
+  "../images/_DSC8151.JPG",
+  "../images/_DSC8152.JPG",
+  "../images/_DSC8136.JPG",
+  "../images/_DSC8138.JPG",
+  "../images/_DSC8139.JPG",
+];
 
 const img = document.querySelector(".carousel-img");
 
