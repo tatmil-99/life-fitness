@@ -24,11 +24,19 @@ img {
 
 .left-btn,
 .right-btn {
-  padding: 12px 8px;
-  border: none;
-  background-color: white;
-  color: black;
-  font-size: 19px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .left-btn,
+  .right-btn {
+    display: block;
+    padding: 12px 8px;
+    border: none;
+    background-color: white;
+    color: black;
+    font-size: 19px;
+  }
 }
 
 .content {
