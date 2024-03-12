@@ -3,6 +3,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 img {
@@ -11,6 +12,23 @@ img {
   /* prevents browser from hijacking scroll gesture */
   touch-action: none;
   transition: opacity 1s ease-in;
+}
+
+.img-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 750px;
+}
+
+.left-btn,
+.right-btn {
+  padding: 12px 8px;
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 19px;
 }
 
 .content {
