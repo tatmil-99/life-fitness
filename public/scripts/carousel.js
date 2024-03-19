@@ -34,6 +34,7 @@ const transition = (img, direction) => {
     let nextImg;
     let prevImg;
 
+    // uses LIFO to handle swiping back and forth through images
     if (direction === "right") {
       nextImg = preLoadedImages.shift();
       img.replaceWith(nextImg);
@@ -54,25 +55,30 @@ const transition = (img, direction) => {
 
 const handleStart = (e) => {
   const startX = e.clientX;
-  const img = e.target;
+  const target = e.target;
 
   const handleEnd = (e) => {
     const endX = e.clientX;
     const scrollSensitivity = 50;
     const scrollDistance = startX - endX;
 
-    // uses LIFO to handle swiping back and forth through images
-    if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
-      setTimeout(transition(img, "right"), 350);
-    } else if (scrollDistance < -scrollSensitivity && viewedImages.length > 0) {
-      setTimeout(transition(img, "left"), 350);
-    }
+    if (target.classList.contains("carousel-img")) {
+      if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
+        setTimeout(transition(target, "right"), 350);
+      } else if (
+        scrollDistance < -scrollSensitivity &&
+        viewedImages.length > 0
+      ) {
+        setTimeout(transition(target, "left"), 350);
+      }
 
-    // prevents event piling
-    img.removeEventListener("pointerup", handleEnd);
+      target.removeEventListener("pointerup", handleEnd); // prevents event piling
+    } else if (target.classList.contains("carousel-btn")) {
+      console.log(target.tagName);
+    }
   };
 
-  img.addEventListener("pointerup", handleEnd);
+  target.addEventListener("pointerup", handleEnd);
 };
 
 const viewedImages = [];
