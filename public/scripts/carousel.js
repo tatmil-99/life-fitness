@@ -53,25 +53,26 @@ const transition = (img, direction) => {
   };
 };
 
+const handleSwipe = (target, startX, endX) => {
+  const scrollSensitivity = 50;
+  const scrollDistance = startX - endX;
+
+  if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
+    setTimeout(transition(target, "right"), 350);
+  } else if (scrollDistance < -scrollSensitivity && viewedImages.length > 0) {
+    setTimeout(transition(target, "left"), 350);
+  }
+};
+
 const handleStart = (e) => {
   const startX = e.clientX;
   const target = e.target;
 
   const handleEnd = (e) => {
     const endX = e.clientX;
-    const scrollSensitivity = 50;
-    const scrollDistance = startX - endX;
 
     if (target.classList.contains("carousel-img")) {
-      if (scrollDistance > scrollSensitivity && preLoadedImages.length > 0) {
-        setTimeout(transition(target, "right"), 350);
-      } else if (
-        scrollDistance < -scrollSensitivity &&
-        viewedImages.length > 0
-      ) {
-        setTimeout(transition(target, "left"), 350);
-      }
-
+      handleSwipe(target, startX, endX);
       target.removeEventListener("pointerup", handleEnd); // prevents event piling
     } else if (target.classList.contains("carousel-btn")) {
       console.log(target.tagName);
