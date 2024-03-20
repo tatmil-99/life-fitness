@@ -64,6 +64,10 @@ const handleSwipe = (target, startX, endX) => {
   }
 };
 
+const handleClick = (target) => {
+  console.log(target.tagName);
+};
+
 const handleStart = (e) => {
   const startX = e.clientX;
   const target = e.target;
@@ -75,11 +79,32 @@ const handleStart = (e) => {
       handleSwipe(target, startX, endX);
       target.removeEventListener("pointerup", handleEnd); // prevents event piling
     } else if (target.classList.contains("carousel-btn")) {
-      console.log(target.tagName);
+      handleClick(target);
     }
   };
 
   target.addEventListener("pointerup", handleEnd);
+};
+
+// add listeners to cached images
+const addListeners = (carouselBtns, img) => {
+  const viewportWidth = window.innerWidth;
+
+  if (img.complete && viewportWidth < 768) {
+    img.addEventListener("pointerdown", handleStart);
+  } else if (img.complete && viewportWidth >= 768) {
+    carouselBtns.forEach((btn) => {
+      btn.addEventListener("pointerdown", handleStart);
+    });
+  } else {
+    img.addEventListener("load", () => {
+      viewportWidth < 768
+        ? img.addEventListener("pointerdown", handleStart)
+        : carouselBtns.forEach((btn) => {
+            btn.addEventListener("pointerdown", handleStart);
+          });
+    });
+  }
 };
 
 const viewedImages = [];
@@ -91,16 +116,9 @@ const imageFiles = [
   "../images/_DSC8139.JPG",
 ];
 
+const carouselBtns = document.querySelectorAll(".carousel-btn");
 const img = document.querySelector(".carousel-img");
-
-// checks to see if image is already cached
-if (img.complete) {
-  img.addEventListener("pointerdown", handleStart);
-} else {
-  img.addEventListener("load", () => {
-    img.addEventListener("pointerdown", handleStart);
-  });
-}
+addListeners(carouselBtns, img);
 
 const preLoadedImages = imageFiles.map((file, index) => {
   const img = new Image();
